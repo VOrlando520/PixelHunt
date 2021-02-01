@@ -3,17 +3,13 @@ package com.xpgaming.pixelhunt.ui;
 import ca.landonjw.gooeylibs.inventory.api.Button;
 import ca.landonjw.gooeylibs.inventory.api.Page;
 import ca.landonjw.gooeylibs.inventory.api.Template;
-import com.xpgaming.pixelhunt.Config;
 import com.xpgaming.pixelhunt.config.PixelHuntConfig;
 import com.xpgaming.pixelhunt.hunt.PixelHunt;
 import com.xpgaming.pixelhunt.hunt.PixelHuntFactory;
-import com.xpgaming.pixelhunt.utils.ButtonUtils;
 import com.xpgaming.pixelhunt.utils.UtilConcurrency;
-import com.xpgaming.pixelhunt.utils.Utils;
 import com.xpgaming.pixelhunt.utils.item.ItemBuilder;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
-import net.minecraft.util.text.Style;
 
 public class HuntUI {
 
