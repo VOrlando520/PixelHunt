@@ -4,42 +4,33 @@ import ca.landonjw.gooeylibs.inventory.api.Button;
 import ca.landonjw.gooeylibs.inventory.api.Page;
 import ca.landonjw.gooeylibs.inventory.api.Template;
 import com.xpgaming.pixelhunt.Config;
+import com.xpgaming.pixelhunt.config.PixelHuntConfig;
 import com.xpgaming.pixelhunt.utils.ButtonUtils;
+import com.xpgaming.pixelhunt.utils.UtilConcurrency;
 import com.xpgaming.pixelhunt.utils.Utils;
+import com.xpgaming.pixelhunt.utils.item.ItemBuilder;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemStack;
-
-import java.util.Collections;
-
-import static com.xpgaming.pixelhunt.utils.Utils.*;
+import net.minecraft.item.Item;
+import net.minecraft.util.text.Style;
 
 public class HuntUI {
 
-    public static Page menuUI(EntityPlayerMP player) {
+    private static final Button BACKGROUND_FILLER = Button.of(new ItemBuilder()
+            .type(Item.getByNameOrId(PixelHuntConfig.getInstance().getBackgroundItem()))
+            .damage(PixelHuntConfig.getInstance().getBackgroundItemDamage())
+            .build());
+
+    public static void open(EntityPlayerMP player) {
+        UtilConcurrency.runAsync(() -> {
+            Template.Builder template = Template.builder(PixelHuntConfig.getInstance().getGuiHeight())
+                    .fill(BACKGROUND_FILLER);
 
 
 
-        Button book = Button.builder()
-                .item(new ItemStack(Items.BOOK))
-                .displayName(regex(Config.getInstance().getConfig().getNode("pixelhunt","gui","gui-book-display").getString()))
-                .lore(Collections.singletonList(regex(Config.getInstance().getConfig().getNode("pixelhunt","gui","gui-book-text").getString())))
-                .build();
-
-
-        Template template = Template.builder(3)
-                .checker(0, 0, 3, 9, colouredPane(EnumDyeColor.byMetadata(getButtonPos("gui-glass-pane", 1))), colouredPane(EnumDyeColor.byMetadata(getButtonPos("gui-glass-pane", 2))))
-                .set(1,6, book)
-                .build();
-
-        return Page.builder()
-                .title(Utils.regex(Config.getInstance().getConfig().getNode("pixelhunt","gui","gui-title").getString()))
-                .template(template)
-                .dynamicContentArea(1, 2, 1, 4)
-                .dynamicContents(ButtonUtils.getHuntButtons(player))
-                .build();
+            Page.builder()
+                    .title(PixelHuntConfig.getInstance().getGuiName())
+                    .template(template.build())
+                    .build().forceOpenPage(player);
+        });
     }
-
-
 }
