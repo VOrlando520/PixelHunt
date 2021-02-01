@@ -2,7 +2,9 @@ package com.xpgaming.pixelhunt;
 
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.xpgaming.pixelhunt.listener.PokemonCaptureListener;
+import com.xpgaming.pixelhunt.task.ParticleDisplayTask;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -24,6 +26,8 @@ public class PixelHuntForge {
     private static PixelHuntForge instance;
     private static MinecraftServer server;
 
+    private final ParticleDisplayTask displayTask = new ParticleDisplayTask();
+
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         instance = this;
@@ -33,6 +37,7 @@ public class PixelHuntForge {
     public void onServerStarting(FMLServerStartingEvent event) {
         server = event.getServer();
 
+        MinecraftForge.EVENT_BUS.register(this.displayTask);
         Pixelmon.EVENT_BUS.register(new PokemonCaptureListener(this));
     }
 
@@ -47,5 +52,9 @@ public class PixelHuntForge {
 
     public static final MinecraftServer getServer() {
         return server;
+    }
+
+    public ParticleDisplayTask getDisplayTask() {
+        return this.displayTask;
     }
 }
