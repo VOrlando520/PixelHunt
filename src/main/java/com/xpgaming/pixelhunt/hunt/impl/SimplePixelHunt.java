@@ -51,7 +51,7 @@ public class SimplePixelHunt implements PixelHunt {
     }
 
     @Override
-    public void rewardCatch(EntityPlayerMP player) {
+    public void rewardCatch(EntityPlayerMP player, Pokemon caught) {
         //TODO:
     }
 }

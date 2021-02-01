@@ -60,6 +60,6 @@ public interface PixelHunt {
      *
      * @param player The player who won the hunt
      */
-    void rewardCatch(EntityPlayerMP player);
+    void rewardCatch(EntityPlayerMP player, Pokemon caught);
 
 }
