@@ -20,7 +20,7 @@ public class PixelHuntCommand {
 
     @CommandProcessor("")
     public void executeCommand(EntityPlayerMP sender) {
-        HuntUI.menuUI(sender);
+        HuntUI.open(sender);
     }
 
     @CommandProcessor("reload")
