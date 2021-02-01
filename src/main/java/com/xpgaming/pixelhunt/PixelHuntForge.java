@@ -1,5 +1,7 @@
 package com.xpgaming.pixelhunt;
 
+import com.pixelmonmod.pixelmon.Pixelmon;
+import com.xpgaming.pixelhunt.listener.PokemonCaptureListener;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -30,6 +32,8 @@ public class PixelHuntForge {
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
         server = event.getServer();
+
+        Pixelmon.EVENT_BUS.register(new PokemonCaptureListener(this));
     }
 
     @Mod.EventHandler
