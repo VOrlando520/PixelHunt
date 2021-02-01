@@ -2,7 +2,7 @@ package com.xpgaming.pixelhunt;
 
 import ca.landonjw.gooeylibs.inventory.api.InventoryAPI;
 import com.pixelmonmod.pixelmon.Pixelmon;
-import com.xpgaming.pixelhunt.commands.Hunt;
+import com.xpgaming.pixelhunt.commands.PixelHuntCommand;
 import com.xpgaming.pixelhunt.commands.NewHunt;
 import com.xpgaming.pixelhunt.commands.Reload;
 import com.xpgaming.pixelhunt.listeners.CaptureListener;
@@ -151,7 +151,7 @@ public class Main {
 	CommandSpec hunt = CommandSpec.builder()
 			.description(Text.of("List hunted pokemon!"))
 			.permission("xpgaming.pixelhunt.base.hunt")
-			.executor(new Hunt())
+			.executor(new PixelHuntCommand())
 			.child(newhunt, "new", "nh", "newhunt")
 			.child(reload, "reload", "rl", "r", "rel")
 			.build();

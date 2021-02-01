@@ -26,8 +26,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.xpgaming.pixelhunt.commands.Hunt.rewardList;
-
 public class Utils {
 
     private static Utils instance = new Utils();
