@@ -2,6 +2,7 @@ package com.xpgaming.pixelhunt;
 
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.xpgaming.pixelhunt.listener.PokemonCaptureListener;
+import com.xpgaming.pixelhunt.listener.PokemonSpawnListener;
 import com.xpgaming.pixelhunt.task.ParticleDisplayTask;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -38,6 +39,7 @@ public class PixelHuntForge {
         server = event.getServer();
 
         MinecraftForge.EVENT_BUS.register(this.displayTask);
+        MinecraftForge.EVENT_BUS.register(new PokemonSpawnListener(this));
         Pixelmon.EVENT_BUS.register(new PokemonCaptureListener(this));
     }
 
