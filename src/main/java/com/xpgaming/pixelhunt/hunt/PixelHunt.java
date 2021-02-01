@@ -3,6 +3,7 @@ package com.xpgaming.pixelhunt.hunt;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonSpec;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
 
 /**
@@ -27,6 +28,14 @@ public interface PixelHunt {
      * @param config The node the hunt is being loaded from
      */
     void load(ConfigurationNode config);
+
+    /**
+     *
+     * Get the display item for the hunt UI
+     *
+     * @return the display item for the pixelhunt GUI
+     */
+    ItemStack getDisplay();
 
     /**
      *
