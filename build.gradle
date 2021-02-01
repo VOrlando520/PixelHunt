@@ -92,6 +92,7 @@ shadowJar {
 reobf {
     shadowJar {
         classpath = sourceSets.main.compileClasspath
+        archiveName = rootProject.name + '.jar'
     }
 }
 
