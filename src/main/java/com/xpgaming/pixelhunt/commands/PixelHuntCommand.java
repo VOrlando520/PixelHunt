@@ -2,6 +2,7 @@ package com.xpgaming.pixelhunt.commands;
 
 
 import com.envyful.acaf.api.command.Command;
+import com.envyful.acaf.api.command.Permissible;
 import com.envyful.acaf.api.command.executor.CommandProcessor;
 import com.xpgaming.pixelhunt.ui.HuntUI;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,6 +21,12 @@ public class PixelHuntCommand {
     @CommandProcessor("")
     public void executeCommand(EntityPlayerMP sender) {
         HuntUI.menuUI(sender);
+    }
+
+    @CommandProcessor("reload")
+    @Permissible("pixelhunt.admin.reload")
+    public void executeReloadCommand(EntityPlayerMP sender) {
+        //TODO: reload configs
     }
 }
 
