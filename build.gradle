@@ -82,17 +82,21 @@ configurations {
 
 shadowJar {
     configurations = [project.configurations.shadow]
+    archiveName = rootProject.name + '.jar'
 
     relocate('org.spongepowered.configurate', "com.xpgaming.pixelhunt.shade.configurate")
     relocate('org.yaml.snakeyaml', "com.xpgaming.pixelhunt.shade.yaml.snakeyaml")
     relocate('org.checkerframework.checker', "com.xpgaming.pixelhunt.shade.checkerframework.checker")
+    relocate('org.checkerframework.common', "com.xpgaming.pixelhunt.shade.checkerframework.common")
+    relocate('org.checkerframework.dataflow', "com.xpgaming.pixelhunt.shade.checkerframework.dataflow")
+    relocate('org.checkerframework.framework', "com.xpgaming.pixelhunt.shade.checkerframework.framework")
+    relocate('io.leangen.geantyref', "com.xpgaming.pixelhunt.shade.geantyref")
     relocate('com.envyful.acaf', "com.xpgaming.pixelhunt.shade.acaf")
 }
 
 reobf {
     shadowJar {
         classpath = sourceSets.main.compileClasspath
-        archiveName = rootProject.name + '.jar'
     }
 }
 
