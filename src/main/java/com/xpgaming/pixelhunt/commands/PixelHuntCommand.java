@@ -18,7 +18,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 )
 public class PixelHuntCommand {
 
-    @CommandProcessor("")
+    @CommandProcessor
     public void executeCommand(EntityPlayerMP sender) {
         HuntUI.open(sender);
     }
