@@ -51,6 +51,7 @@ dependencies {
     implementation fg.deobf('ca.landonjw.gooeylibs:GooeyLibs-1.0.6:1.12.2-forge-1.0.1')
 
     shadow 'org.spongepowered:configurate-yaml:4.0.0'
+    shadow fg.deobf('com.envyful.acaf:acaf-1.0-SNAPSHOT:1.12.2-forge-1.0.1')
 }
 
 processResources {
@@ -85,6 +86,7 @@ shadowJar {
     relocate('org.spongepowered.configurate', "com.xpgaming.pixelhunt.shade.configurate")
     relocate('org.yaml.snakeyaml', "com.xpgaming.pixelhunt.shade.yaml.snakeyaml")
     relocate('org.checkerframework.checker', "com.xpgaming.pixelhunt.shade.checkerframework.checker")
+    relocate('com.envyful.acaf', "com.xpgaming.pixelhunt.shade.acaf")
 }
 
 reobf {
