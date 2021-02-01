@@ -5,6 +5,8 @@ import ca.landonjw.gooeylibs.inventory.api.Page;
 import ca.landonjw.gooeylibs.inventory.api.Template;
 import com.xpgaming.pixelhunt.Config;
 import com.xpgaming.pixelhunt.config.PixelHuntConfig;
+import com.xpgaming.pixelhunt.hunt.PixelHunt;
+import com.xpgaming.pixelhunt.hunt.PixelHuntFactory;
 import com.xpgaming.pixelhunt.utils.ButtonUtils;
 import com.xpgaming.pixelhunt.utils.UtilConcurrency;
 import com.xpgaming.pixelhunt.utils.Utils;
@@ -25,7 +27,19 @@ public class HuntUI {
             Template.Builder template = Template.builder(PixelHuntConfig.getInstance().getGuiHeight())
                     .fill(BACKGROUND_FILLER);
 
+            int deltaY = 0;
+            int deltaX = 0;
 
+            for (PixelHunt hunt : PixelHuntFactory.getAllHunts()) {
+                template.set(1 + deltaX, 1 + deltaY, Button.of(hunt.getDisplay()));
+
+                ++deltaX;
+
+                if (deltaX == 7) {
+                    deltaX = 1;
+                    ++deltaY;
+                }
+            }
 
             Page.builder()
                     .title(PixelHuntConfig.getInstance().getGuiName())
