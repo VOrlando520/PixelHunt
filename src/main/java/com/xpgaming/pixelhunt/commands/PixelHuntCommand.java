@@ -13,8 +13,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
         description = "A command to open the PixelHunt UI",
         aliases = {
                "pixelhunt",
-                "pokemonhunt",
-                "pokehunt"
+               "pokemonhunt",
+               "pokehunt"
         }
 )
 public class PixelHuntCommand {
