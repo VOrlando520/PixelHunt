@@ -4,6 +4,7 @@ package com.xpgaming.pixelhunt.commands;
 import com.envyful.acaf.api.command.Command;
 import com.envyful.acaf.api.command.Permissible;
 import com.envyful.acaf.api.command.executor.CommandProcessor;
+import com.envyful.acaf.api.command.executor.Sender;
 import com.xpgaming.pixelhunt.ui.HuntUI;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -19,13 +20,13 @@ import net.minecraft.entity.player.EntityPlayerMP;
 public class PixelHuntCommand {
 
     @CommandProcessor
-    public void executeCommand(EntityPlayerMP sender) {
+    public void executeCommand(@Sender EntityPlayerMP sender) {
         HuntUI.open(sender);
     }
 
     @CommandProcessor("reload")
     @Permissible("pixelhunt.admin.reload")
-    public void executeReloadCommand(EntityPlayerMP sender) {
+    public void executeReloadCommand(@Sender EntityPlayerMP sender) {
         //TODO: reload configs
     }
 }
