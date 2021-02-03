@@ -7,6 +7,7 @@ import com.xpgaming.pixelhunt.hunt.PixelHunt;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.List;
 
@@ -32,7 +33,15 @@ public class SimplePixelHunt implements PixelHunt {
 
     @Override
     public void load(ConfigurationNode config) {
+        ConfigurationNode configNode = config.node(this.identifier);
 
+        this.randomCommands = configNode.node("random-reward-commands").getBoolean(false);
+
+        try {
+            this.rewardCommands.addAll(configNode.node("reward-commands").getList(String.class));
+        } catch (SerializationException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
