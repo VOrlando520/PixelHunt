@@ -3,6 +3,7 @@ package com.xpgaming.pixelhunt.utils.pokemon;
 import com.google.common.collect.Lists;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
+import com.pixelmonmod.pixelmon.entities.pixelmon.stats.Gender;
 import com.pixelmonmod.pixelmon.enums.EnumGrowth;
 import com.pixelmonmod.pixelmon.enums.EnumNature;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
@@ -15,6 +16,7 @@ public class PokemonSpec {
 
     private EnumSpecies species = null;
     private boolean allowEvolutions = false;
+    private Gender gender = null;
     private List<EnumNature> natures = Lists.newArrayList();
     private List<EnumGrowth> growths = Lists.newArrayList();
     private Requirement<Integer> ivRequirement = null;
@@ -27,6 +29,10 @@ public class PokemonSpec {
 
     public void setAllowEvolutions(boolean allowEvolutions) {
         this.allowEvolutions = allowEvolutions;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public void addNature(EnumNature nature) {
@@ -43,6 +49,10 @@ public class PokemonSpec {
 
     public boolean matches(Pokemon pokemon) {
         if (!this.doesSpeciesMatch(pokemon)) {
+            return false;
+        }
+
+        if (this.gender != null && !Objects.equals(this.gender, pokemon.getGender())) {
             return false;
         }
 
