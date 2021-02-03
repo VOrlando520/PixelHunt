@@ -47,6 +47,10 @@ public class PokemonSpec {
         this.ivRequirement = requirement;
     }
 
+    public boolean matches(EntityPixelmon pixelmon) {
+        return this.matches(pixelmon.getPokemonData());
+    }
+
     public boolean matches(Pokemon pokemon) {
         if (!this.doesSpeciesMatch(pokemon)) {
             return false;
@@ -99,9 +103,5 @@ public class PokemonSpec {
         }
 
         return this.growths.contains(pokemon.getGrowth());
-    }
-
-    public boolean matches(EntityPixelmon pixelmon) {
-        return this.matches(pixelmon.getPokemonData());
     }
 }
