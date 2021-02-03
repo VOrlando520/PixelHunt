@@ -1,10 +1,14 @@
 package com.xpgaming.pixelhunt.utils.pokemon;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.pixelmonmod.pixelmon.api.pokemon.PokemonSpec;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.Gender;
+import com.pixelmonmod.pixelmon.enums.EnumGrowth;
+import com.pixelmonmod.pixelmon.enums.EnumNature;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import com.xpgaming.pixelhunt.utils.math.UtilRandom;
+import com.xpgaming.pixelhunt.utils.pokemon.requirement.impl.MinimumIntegerRequirement;
+import com.xpgaming.pixelhunt.utils.pokemon.requirement.impl.RandomMinimumIntegerRequirement;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,13 +28,13 @@ public class PokemonGenerator {
     private final boolean allowEvolutions;
     private final boolean ivRequirement;
     private final boolean randomIVGeneration;
-    private final float minIVPercentage;
-    private final float maxIVPercentage;
+    private final int minIVPercentage;
+    private final int maxIVPercentage;
 
     private PokemonGenerator(Set<EnumSpecies> blockedTypes, boolean speciesRequirement, boolean allowLegends, boolean allowUltraBeasts, boolean genderRequirement,
                              boolean growthRequirement, boolean natureRequirement, int potentialGrowthRequirements, int potentialNatureRequirements,
                              boolean allowEvolutions, boolean ivRequirement, boolean randomIVGeneration,
-                             float minIVPercentage, float maxIVPercentage) {
+                             int minIVPercentage, int maxIVPercentage) {
         this.blockedTypes = blockedTypes;
         this.speciesRequirement = speciesRequirement;
         this.allowLegends = allowLegends;
@@ -55,18 +59,41 @@ public class PokemonGenerator {
         PokemonSpec spec = new PokemonSpec();
 
         if (this.speciesRequirement) {
-            spec.name = this.getRandomSpecies().name;
+            spec.setSpecies(this.getRandomSpecies());
+            spec.setAllowEvolutions(this.allowEvolutions);
         }
 
         if (this.genderRequirement) {
-            spec.gender = UtilRandom.getRandomElementExcluding(Gender.values(), Gender.None).getForm();
+            spec.setGender(UtilRandom.getRandomElementExcluding(Gender.values(), Gender.None));
         }
 
         if (this.growthRequirement) {
-
+            List<EnumGrowth> alreadyFound = Lists.newArrayList();
+            for (int i = 0; i < this.potentialGrowthRequirements; i++) {
+                EnumGrowth growth = UtilRandom.getRandomElementExcluding(EnumGrowth.values(), alreadyFound.toArray(new EnumGrowth[0]));
+                spec.addGrowth(growth);
+                alreadyFound.add(growth);
+            }
         }
 
-        return null; //TODO:
+        if (this.natureRequirement) {
+            List<EnumNature> alreadyFound = Lists.newArrayList();
+            for (int i = 0; i < this.potentialNatureRequirements; i++) {
+                EnumNature nature = UtilRandom.getRandomElementExcluding(EnumNature.values(), alreadyFound.toArray(new EnumNature[0]));
+                spec.addNature(nature);
+                alreadyFound.add(nature);
+            }
+        }
+
+        if (this.ivRequirement) {
+            if (this.randomIVGeneration) {
+                spec.setIVRequirement(new RandomMinimumIntegerRequirement(this.minIVPercentage, this.maxIVPercentage));
+            } else {
+                spec.setIVRequirement(new MinimumIntegerRequirement(this.maxIVPercentage));
+            }
+        }
+
+        return spec;
     }
 
     private EnumSpecies getRandomSpecies() {
@@ -109,8 +136,8 @@ public class PokemonGenerator {
         private boolean allowEvolutions = true;
         private boolean randomIVGeneration = false;
         private boolean ivRequirement = false;
-        private float minIVPercentage = 0;
-        private float maxIVPercentage = 100;
+        private int minIVPercentage = 0;
+        private int maxIVPercentage = 100;
 
         protected Builder() {}
 
@@ -174,12 +201,12 @@ public class PokemonGenerator {
             return this;
         }
 
-        public Builder setMinimumIVPercentage(float minIVPercentage) {
+        public Builder setMinimumIVPercentage(int minIVPercentage) {
             this.minIVPercentage = minIVPercentage;
             return this;
         }
 
-        public Builder setMaximumIVPercentage(float maxIVPercentage) {
+        public Builder setMaximumIVPercentage(int maxIVPercentage) {
             this.maxIVPercentage = maxIVPercentage;
             return this;
         }
