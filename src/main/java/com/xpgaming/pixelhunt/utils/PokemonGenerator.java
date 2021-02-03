@@ -12,6 +12,8 @@ public class PokemonGenerator {
 
     private final Set<EnumSpecies> blockedTypes;
     private final boolean speciesRequirement;
+    private final boolean allowLegends;
+    private final boolean allowUltraBeasts;
     private final boolean genderRequirement;
     private final boolean growthRequirement;
     private final boolean natureRequirement;
@@ -23,12 +25,14 @@ public class PokemonGenerator {
     private final float minIVPercentage;
     private final float maxIVPercentage;
 
-    private PokemonGenerator(Set<EnumSpecies> blockedTypes, boolean speciesRequirement, boolean genderRequirement,
+    private PokemonGenerator(Set<EnumSpecies> blockedTypes, boolean speciesRequirement, boolean allowLegends, boolean allowUltraBeasts, boolean genderRequirement,
                              boolean growthRequirement, boolean natureRequirement, int potentialGrowthRequirements, int potentialNatureRequirements,
                              boolean allowEvolutions, boolean ivRequirement, boolean randomIVGeneration,
                              float minIVPercentage, float maxIVPercentage) {
         this.blockedTypes = blockedTypes;
         this.speciesRequirement = speciesRequirement;
+        this.allowLegends = allowLegends;
+        this.allowUltraBeasts = allowUltraBeasts;
         this.genderRequirement = genderRequirement;
         this.growthRequirement = growthRequirement;
         this.natureRequirement = natureRequirement;
@@ -46,6 +50,14 @@ public class PokemonGenerator {
     }
 
     public PokemonSpec generate() {
+        PokemonSpec spec = new PokemonSpec();
+
+        spec.species
+
+        if (this.speciesRequirement) {
+            spec.
+        }
+
         return null; //TODO:
     }
 
@@ -57,6 +69,8 @@ public class PokemonGenerator {
 
         private Set<EnumSpecies> blockedTypes = Sets.newHashSet();
         private boolean speciesRequirement = true;
+        private boolean allowLegends = false;
+        private boolean allowUltraBeasts = false;
         private boolean genderRequirement = true;
         private boolean growthRequirement = false;
         private boolean natureRequirement = false;
@@ -69,6 +83,16 @@ public class PokemonGenerator {
         private float maxIVPercentage = 100;
 
         protected Builder() {}
+
+        public Builder setAllowLegends(boolean allowLegends) {
+            this.allowLegends = allowLegends;
+            return this;
+        }
+
+        public Builder setAllowUltraBeasts(boolean allowUltraBeasts) {
+            this.allowUltraBeasts = allowUltraBeasts;
+            return this;
+        }
 
         public Builder addBlockedType(EnumSpecies species) {
             this.blockedTypes.add(species);
@@ -133,7 +157,7 @@ public class PokemonGenerator {
         public PokemonGenerator build() {
             return new PokemonGenerator(this.blockedTypes,
                     this.speciesRequirement,
-                    this.genderRequirement,
+                    allowLegends, allowUltraBeasts, this.genderRequirement,
                     this.growthRequirement,
                     this.natureRequirement,
                     this.potentialGrowthRequirements,
