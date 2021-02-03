@@ -2,12 +2,15 @@ package com.xpgaming.pixelhunt.utils.pokemon;
 
 import com.google.common.collect.Lists;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import com.pixelmonmod.pixelmon.config.PixelmonItems;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.Gender;
 import com.pixelmonmod.pixelmon.enums.EnumGrowth;
 import com.pixelmonmod.pixelmon.enums.EnumNature;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import com.xpgaming.pixelhunt.utils.pokemon.requirement.Requirement;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 import java.util.Objects;
@@ -103,5 +106,15 @@ public class PokemonSpec {
         }
 
         return this.growths.contains(pokemon.getGrowth());
+    }
+
+    public ItemStack getPhoto() {
+        ItemStack itemStack = new ItemStack(PixelmonItems.itemPixelmonSprite);
+        NBTTagCompound tagCompound = new NBTTagCompound();
+
+        itemStack.setTagCompound(tagCompound);
+        tagCompound.setShort("ndex", (short) this.species.getNationalPokedexInteger());
+
+        return itemStack;
     }
 }
