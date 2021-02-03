@@ -21,4 +21,7 @@ public class UtilRandom {
         return array[ThreadLocalRandom.current().nextInt(array.length)];
     }
 
+    public static int getRandomInteger(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(max + 1 - min) + min;
+    }
 }
