@@ -1,8 +1,10 @@
-package com.xpgaming.pixelhunt.utils;
+package com.xpgaming.pixelhunt.utils.pokemon;
 
 import com.google.common.collect.Sets;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonSpec;
+import com.pixelmonmod.pixelmon.entities.pixelmon.stats.Gender;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
+import com.xpgaming.pixelhunt.utils.math.UtilRandom;
 
 import java.util.Collections;
 import java.util.List;
@@ -52,13 +54,41 @@ public class PokemonGenerator {
     public PokemonSpec generate() {
         PokemonSpec spec = new PokemonSpec();
 
-        spec.species
-
         if (this.speciesRequirement) {
-            spec.
+            spec.name = this.getRandomSpecies().name;
+        }
+
+        if (this.genderRequirement) {
+            spec.gender = UtilRandom.getRandomElementExcluding(Gender.values(), Gender.None).getForm();
+        }
+
+        if (this.growthRequirement) {
+
         }
 
         return null; //TODO:
+    }
+
+    private EnumSpecies getRandomSpecies() {
+        EnumSpecies species = EnumSpecies.randomPoke(this.allowLegends);
+
+        while (!this.isAllowedSpecies(species)) {
+            species = EnumSpecies.randomPoke(this.allowLegends);
+        }
+
+        return species;
+    }
+
+    private boolean isAllowedSpecies(EnumSpecies species) {
+        if (!this.allowUltraBeasts && species.isUltraBeast()) {
+            return false;
+        }
+
+        if (!this.allowLegends && species.isLegendary()) {
+            return false;
+        }
+
+        return !this.blockedTypes.contains(species);
     }
 
     public static PokemonGenerator.Builder builder() {
