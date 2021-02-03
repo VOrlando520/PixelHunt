@@ -2,11 +2,11 @@ package com.xpgaming.pixelhunt.utils.pokemon.requirement.impl;
 
 import com.xpgaming.pixelhunt.utils.pokemon.requirement.Requirement;
 
-public class SingleIntegerRequirement implements Requirement<Integer> {
+public class MinimumIntegerRequirement implements Requirement<Integer> {
 
     private final int requirement;
 
-    public SingleIntegerRequirement(int requirement) {
+    public MinimumIntegerRequirement(int requirement) {
         this.requirement = requirement;
     }
 
@@ -17,6 +17,6 @@ public class SingleIntegerRequirement implements Requirement<Integer> {
             return false;
         }
 
-        return data == this.requirement;
+        return data >= this.requirement;
     }
 }

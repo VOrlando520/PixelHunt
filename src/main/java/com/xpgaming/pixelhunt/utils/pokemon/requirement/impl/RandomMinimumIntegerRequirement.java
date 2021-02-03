@@ -2,9 +2,9 @@ package com.xpgaming.pixelhunt.utils.pokemon.requirement.impl;
 
 import com.xpgaming.pixelhunt.utils.math.UtilRandom;
 
-public class RandomIntegerRequirement extends SingleIntegerRequirement {
+public class RandomMinimumIntegerRequirement extends MinimumIntegerRequirement {
 
-    public RandomIntegerRequirement(int min, int max) {
+    public RandomMinimumIntegerRequirement(int min, int max) {
         super(UtilRandom.getRandomInteger(min, max));
     }
 }
