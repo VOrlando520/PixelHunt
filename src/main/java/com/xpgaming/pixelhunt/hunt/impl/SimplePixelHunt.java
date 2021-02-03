@@ -2,8 +2,10 @@ package com.xpgaming.pixelhunt.hunt.impl;
 
 import com.google.common.collect.Lists;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
-import com.pixelmonmod.pixelmon.api.pokemon.PokemonSpec;
 import com.xpgaming.pixelhunt.hunt.PixelHunt;
+import com.xpgaming.pixelhunt.utils.item.UtilItemStack;
+import com.xpgaming.pixelhunt.utils.pokemon.PokemonGenerator;
+import com.xpgaming.pixelhunt.utils.pokemon.PokemonSpec;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -16,6 +18,7 @@ public class SimplePixelHunt implements PixelHunt {
     private final String identifier;
     private final List<String> rewardCommands = Lists.newArrayList();
 
+    private  PokemonGenerator generator;
     private ItemStack displayItem;
     private PokemonSpec currentPokemon;
     private boolean randomCommands;
@@ -51,7 +54,10 @@ public class SimplePixelHunt implements PixelHunt {
 
     @Override
     public PokemonSpec generatePokemon() {
-        return null; //TODO:
+        this.currentPokemon = this.generator.generate();
+        this.displayItem = this.currentPokemon.getPhoto();
+        UtilItemStack.setLore(this.displayItem, this.generator.getDisplayDescription());
+        return this.currentPokemon;
     }
 
     @Override
