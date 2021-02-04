@@ -66,7 +66,7 @@ public class PixelHuntForge {
                 PixelHuntConfig.CONFIG_PATH.getParent().toFile().mkdir();
                 Files.createFile(PixelHuntConfig.CONFIG_PATH);
 
-                InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("");
+                InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("config.yml");
                 byte[] buffer = new byte[resourceAsStream.available()];
                 resourceAsStream.read(buffer);
 
