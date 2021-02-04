@@ -31,6 +31,9 @@ public class SimplePixelHunt implements PixelHunt {
     private ItemStack displayItem;
     private PokemonSpec currentPokemon;
     private boolean randomCommands;
+    private boolean maxIvs;
+    private boolean ivMultiplierEnabled;
+    private float ivMultiplier;
 
     public SimplePixelHunt(String identifier, ConfigurationNode node) {
         this.identifier = identifier;
@@ -47,6 +50,9 @@ public class SimplePixelHunt implements PixelHunt {
     public void load(ConfigurationNode config) {
         this.randomCommands = config.node("random-reward-commands").getBoolean(false);
         this.rewardCommands.addAll(this.getStringList(config, "reward-commands"));
+        this.maxIvs = config.node("max-ivs").getBoolean();
+        this.ivMultiplierEnabled = config.node("iv-multiplier-enabled").getBoolean();
+        this.ivMultiplier = config.node("iv-multiplier").getFloat();
 
         PokemonGenerator.Builder builder = PokemonGenerator.builder();
 
