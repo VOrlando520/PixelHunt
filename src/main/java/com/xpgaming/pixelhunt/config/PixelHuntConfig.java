@@ -1,6 +1,7 @@
 package com.xpgaming.pixelhunt.config;
 
 import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
@@ -15,10 +16,12 @@ public class PixelHuntConfig {
             .build();
 
     private static PixelHuntConfig instance;
+    private static ConfigurationNode configNode;
 
     static {
         try {
-            instance = CONFIG_LOADER.load().get(PixelHuntConfig.class);
+            configNode = CONFIG_LOADER.load();
+            instance = configNode.get(PixelHuntConfig.class);
         } catch (ConfigurateException e) {
             e.printStackTrace();
         }
@@ -26,6 +29,10 @@ public class PixelHuntConfig {
 
     public static PixelHuntConfig getInstance() {
         return instance;
+    }
+
+    public static ConfigurationNode getConfigNode() {
+        return configNode;
     }
 
     private int guiHeight = 3;
