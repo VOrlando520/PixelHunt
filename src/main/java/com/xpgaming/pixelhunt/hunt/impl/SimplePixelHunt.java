@@ -56,14 +56,15 @@ public class SimplePixelHunt implements PixelHunt {
                 .setIVRequirement(config.node("require-iv-percentage").getBoolean())
                 .setRandomIVGeneration(config.node("random-iv-generation").getBoolean());
 
-        if (config.node("random-iv-generation").getBoolean()) {
-            builder.setMinimumIVPercentage(config.node("minimum-iv-percentage").getInt())
-                    .setMaximumIVPercentage(config.node("maximum-iv-percentage").getInt());
-        } else {
-            builder.setMinimumIVPercentage(config.node("required-iv-percentage").getInt())
-                    .setMaximumIVPercentage(config.node("required-iv-percentage").getInt());
+        if (config.node("require-iv-percentage").getBoolean()) {
+            if (config.node("random-iv-generation").getBoolean()) {
+                builder.setMinimumIVPercentage(config.node("minimum-iv-percentage").getInt())
+                        .setMaximumIVPercentage(config.node("maximum-iv-percentage").getInt());
+            } else {
+                builder.setMinimumIVPercentage(config.node("required-iv-percentage").getInt())
+                        .setMaximumIVPercentage(config.node("required-iv-percentage").getInt());
+            }
         }
-
 
         for (String type : this.getStringList(config, "blocked-types")) {
             builder.addBlockedType(EnumSpecies.getFromNameAnyCase(type));
