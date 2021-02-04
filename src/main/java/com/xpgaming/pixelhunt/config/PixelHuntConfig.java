@@ -44,6 +44,9 @@ public class PixelHuntConfig {
     private String guiName = "PixelHunt";
     private String backgroundItem = "minecraft:stained_glass_pane";
     private int backgroundItemDamage = 8;
+    private boolean checkeredBackground = false;
+    private String offColourBackgroundItem = "minecraft:stained_glass_pane";
+    private int offColourBackgroundItemDamage = 9;
     private List<String> spawnBroadcast = Lists.newArrayList();
 
     public int getGuiHeight() {
@@ -64,5 +67,17 @@ public class PixelHuntConfig {
 
     public List<String> getSpawnBroadcast() {
         return this.spawnBroadcast;
+    }
+
+    public boolean isCheckeredBackground() {
+        return this.checkeredBackground;
+    }
+
+    public String getOffColourBackgroundItem() {
+        return this.offColourBackgroundItem;
+    }
+
+    public int getOffColourBackgroundItemDamage() {
+        return this.offColourBackgroundItemDamage;
     }
 }
