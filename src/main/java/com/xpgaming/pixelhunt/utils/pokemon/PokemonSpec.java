@@ -138,7 +138,11 @@ public class PokemonSpec {
                     "§fRequirements:"
             );
 
-            this.description.add("§7• Evolutions? " + this.allowEvolutions);
+            if (this.allowEvolutions) {
+                this.description.add("§7• Evolutions are allowed");
+            } else {
+                this.description.add("§7• Evolutions are not allowed");
+            }
 
             if (this.gender != null) {
                 this.description.add("§7• " + this.gender.name() + " Gender");
