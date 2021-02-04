@@ -28,6 +28,10 @@ public class PokemonSpec {
 
     public PokemonSpec() {}
 
+    public String getName() {
+        return this.species.name;
+    }
+
     public void setSpecies(EnumSpecies species) {
         this.species = species;
     }

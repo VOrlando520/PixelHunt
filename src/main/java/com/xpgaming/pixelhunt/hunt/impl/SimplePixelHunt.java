@@ -3,6 +3,8 @@ package com.xpgaming.pixelhunt.hunt.impl;
 import com.google.common.collect.Lists;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
+import com.xpgaming.pixelhunt.PixelHuntForge;
+import com.xpgaming.pixelhunt.config.PixelHuntConfig;
 import com.xpgaming.pixelhunt.hunt.PixelHunt;
 import com.xpgaming.pixelhunt.utils.UtilServer;
 import com.xpgaming.pixelhunt.utils.math.UtilRandom;
@@ -10,6 +12,7 @@ import com.xpgaming.pixelhunt.utils.pokemon.PokemonGenerator;
 import com.xpgaming.pixelhunt.utils.pokemon.PokemonSpec;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentString;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
@@ -92,6 +95,12 @@ public class SimplePixelHunt implements PixelHunt {
     public PokemonSpec generatePokemon() {
         this.currentPokemon = this.generator.generate();
         this.displayItem = this.currentPokemon.getPhoto();
+
+        for (String broadcast : PixelHuntConfig.getInstance().getSpawnBroadcast()) {
+            PixelHuntForge.getServer().getPlayerList()
+                    .sendMessage(new TextComponentString(broadcast.replace("%pokemon%", this.currentPokemon.getName())));
+        }
+
         return this.currentPokemon;
     }
 
