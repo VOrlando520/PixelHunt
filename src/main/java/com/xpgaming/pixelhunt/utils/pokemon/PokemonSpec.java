@@ -65,7 +65,7 @@ public class PokemonSpec {
             return false;
         }
 
-        if (!this.doesSpeciesMatch(pokemon)) {
+        if (!this.doesGrowthMatch(pokemon)) {
             return false;
         }
 
@@ -73,7 +73,11 @@ public class PokemonSpec {
             return false;
         }
 
-        return this.ivRequirement != null && this.ivRequirement.fits((int) pokemon.getIVs().getPercentage(1));
+        if (this.ivRequirement == null) {
+            return true;
+        }
+
+        return this.ivRequirement.fits((int) pokemon.getIVs().getPercentage(1));
     }
 
     private boolean doesSpeciesMatch(Pokemon pokemon) {

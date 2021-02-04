@@ -21,7 +21,7 @@ public class SimplePixelHunt implements PixelHunt {
     private final String identifier;
     private final List<String> rewardCommands = Lists.newArrayList();
 
-    private  PokemonGenerator generator;
+    private PokemonGenerator generator;
     private ItemStack displayItem;
     private PokemonSpec currentPokemon;
     private boolean randomCommands;
