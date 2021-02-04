@@ -5,6 +5,7 @@ import com.envyful.acaf.impl.ForgeCommandFactory;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.xpgaming.pixelhunt.commands.PixelHuntCommand;
 import com.xpgaming.pixelhunt.config.PixelHuntConfig;
+import com.xpgaming.pixelhunt.hunt.PixelHuntFactory;
 import com.xpgaming.pixelhunt.listener.PokemonCaptureListener;
 import com.xpgaming.pixelhunt.listener.PokemonSpawnListener;
 import com.xpgaming.pixelhunt.task.ParticleDisplayTask;
@@ -14,6 +15,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
+
+import java.io.IOException;
+import java.nio.file.Files;
 
 @Mod(
         modid = PixelHuntForge.MOD_ID,
@@ -44,13 +48,26 @@ public class PixelHuntForge {
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
         server = event.getServer();
+        this.checkAndCreateConfig();
         config = PixelHuntConfig.getInstance();
+        PixelHuntFactory.init(PixelHuntConfig.getConfigNode());
 
         MinecraftForge.EVENT_BUS.register(this.displayTask);
         MinecraftForge.EVENT_BUS.register(new PokemonSpawnListener(this));
         Pixelmon.EVENT_BUS.register(new PokemonCaptureListener(this));
 
         this.commandFactory.registerCommand(server, new PixelHuntCommand());
+    }
+
+    private void checkAndCreateConfig() {
+        if (!PixelHuntConfig.CONFIG_PATH.toFile().exists()) {
+            try {
+                PixelHuntConfig.CONFIG_PATH.getParent().toFile().mkdir();
+                Files.createFile(PixelHuntConfig.CONFIG_PATH);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Mod.EventHandler
