@@ -5,6 +5,7 @@ import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import com.xpgaming.pixelhunt.PixelHuntForge;
+import com.xpgaming.pixelhunt.api.event.PixelHuntStartEvent;
 import com.xpgaming.pixelhunt.api.event.PixelHuntWonEvent;
 import com.xpgaming.pixelhunt.config.PixelHuntConfig;
 import com.xpgaming.pixelhunt.hunt.PixelHunt;
@@ -97,6 +98,11 @@ public class SimplePixelHunt implements PixelHunt {
     public PokemonSpec generatePokemon() {
         this.currentPokemon = this.generator.generate();
         this.displayItem = this.currentPokemon.getPhoto();
+        PixelHuntStartEvent event = new PixelHuntStartEvent(this, this.currentPokemon);
+
+        Pixelmon.EVENT_BUS.post(event);
+
+        this.currentPokemon = event.getGeneratedPokemon();
 
         for (String broadcast : PixelHuntConfig.getInstance().getSpawnBroadcast()) {
             PixelHuntForge.getServer().getPlayerList()
