@@ -1,0 +1,23 @@
+guiHeight: 3
+guiName: "PixelHunt"
+backgroundItem: "minecraft:stained_glass_pane"
+backgroundItemDamage: 8
+
+hunts:
+  Simple:
+    random-reward-commands: false
+    reward-commands: 
+      - 'broadcast Testing %player%'
+    require-species: true
+    allow-legends: false
+    allow-ultra-beasts: false
+    allow-evolutions: true
+    require-gender: true
+    require-growth: true
+    numer-of-possible-growths: 2
+    require-nature: true
+    number-of-possible-natures: 2
+    require-iv-percentage: true
+    random-iv-generation: true
+    minimum-iv-percentage: 30
+    maximum-iv-percentage: 100
