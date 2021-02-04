@@ -8,6 +8,7 @@ import com.pixelmonmod.pixelmon.entities.pixelmon.stats.Gender;
 import com.pixelmonmod.pixelmon.enums.EnumGrowth;
 import com.pixelmonmod.pixelmon.enums.EnumNature;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
+import com.xpgaming.pixelhunt.utils.item.UtilItemStack;
 import com.xpgaming.pixelhunt.utils.pokemon.requirement.Requirement;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,6 +24,7 @@ public class PokemonSpec {
     private List<EnumNature> natures = Lists.newArrayList();
     private List<EnumGrowth> growths = Lists.newArrayList();
     private Requirement<Integer> ivRequirement = null;
+    private List<String> description = null;
 
     public PokemonSpec() {}
 
@@ -115,6 +117,22 @@ public class PokemonSpec {
         itemStack.setTagCompound(tagCompound);
         tagCompound.setShort("ndex", (short) this.species.getNationalPokedexInteger());
 
+        itemStack.setStackDisplayName("§eHunting for §6§l" + this.species.getPokemonName());
+        UtilItemStack.setLore(itemStack, this.getDescription());
+
         return itemStack;
+    }
+
+    private List<String> getDescription() {
+        if (this.description == null) {
+            this.description = description = Lists.newArrayList(
+                    "",
+                    "§fRequirements:"
+            );
+
+            this.description.add("§7• ");
+        }
+
+        return description;
     }
 }
