@@ -3,6 +3,7 @@ package com.xpgaming.pixelhunt.hunt.impl;
 import com.google.common.collect.Lists;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import com.pixelmonmod.pixelmon.entities.pixelmon.stats.StatsType;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import com.xpgaming.pixelhunt.PixelHuntForge;
 import com.xpgaming.pixelhunt.api.event.PixelHuntStartEvent;
@@ -128,6 +129,24 @@ public class SimplePixelHunt implements PixelHunt {
         PixelHuntWonEvent wonEvent = new PixelHuntWonEvent(this, player, caught, this.currentPokemon);
 
         Pixelmon.EVENT_BUS.post(wonEvent);
+
+        if (this.ivMultiplierEnabled) {
+            for (StatsType value : StatsType.values()) {
+                if (value == StatsType.None || value == StatsType.Accuracy || value == StatsType.Evasion) {
+                    continue;
+                }
+
+                caught.getIVs().set(value, Math.min(31, (int) (caught.getIVs().get(value) * this.ivMultiplier)));
+            }
+        } else if (this.maxIvs) {
+            for (StatsType value : StatsType.values()) {
+                if (value == StatsType.None || value == StatsType.Accuracy || value == StatsType.Evasion) {
+                    continue;
+                }
+
+                caught.getIVs().set(value, 31);
+            }
+        }
 
         if (this.randomCommands) {
             UtilServer.executeCommand(UtilRandom.getRandomElement(this.rewardCommands).replace("%player%", player.getName()));
