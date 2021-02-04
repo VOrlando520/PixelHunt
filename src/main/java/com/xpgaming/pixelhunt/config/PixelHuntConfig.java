@@ -1,5 +1,6 @@
 package com.xpgaming.pixelhunt.config;
 
+import com.google.common.collect.Lists;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -8,6 +9,7 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @ConfigSerializable
 public class PixelHuntConfig {
@@ -42,6 +44,7 @@ public class PixelHuntConfig {
     private String guiName = "PixelHunt";
     private String backgroundItem = "minecraft:stained_glass_pane";
     private int backgroundItemDamage = 8;
+    private List<String> spawnBroadcast = Lists.newArrayList();
 
     public int getGuiHeight() {
         return this.guiHeight;
@@ -57,5 +60,9 @@ public class PixelHuntConfig {
 
     public int getBackgroundItemDamage() {
         return this.backgroundItemDamage;
+    }
+
+    public List<String> getSpawnBroadcast() {
+        return this.spawnBroadcast;
     }
 }
