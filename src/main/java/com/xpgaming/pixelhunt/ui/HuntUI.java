@@ -17,9 +17,19 @@ public class HuntUI {
             .damage(PixelHuntConfig.getInstance().getBackgroundItemDamage())
             .build());
 
+    private static final Button BACKGROUND_OFF_FILLER = Button.of(new ItemBuilder()
+            .type(Item.getByNameOrId(PixelHuntConfig.getInstance().getOffColourBackgroundItem()))
+            .damage(PixelHuntConfig.getInstance().getOffColourBackgroundItemDamage())
+            .build());
+
     public static void open(EntityPlayerMP player) {
-        Template.Builder template = Template.builder(PixelHuntConfig.getInstance().getGuiHeight())
-                .fill(BACKGROUND_FILLER);
+        Template.Builder template = Template.builder(PixelHuntConfig.getInstance().getGuiHeight());
+
+        if (PixelHuntConfig.getInstance().isCheckeredBackground()) {
+            template.checker(0, 0, 8, PixelHuntConfig.getInstance().getGuiHeight() - 1, BACKGROUND_FILLER, BACKGROUND_OFF_FILLER);
+        } else {
+            template.fill(BACKGROUND_FILLER);
+        }
 
         int deltaY = 0;
         int deltaX = 0;
