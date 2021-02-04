@@ -130,9 +130,46 @@ public class PokemonSpec {
                     "§fRequirements:"
             );
 
-            this.description.add("§7• ");
+            this.description.add("§7• Evolutions? " + this.allowEvolutions);
+
+            if (this.gender != null) {
+                this.description.add("§7• " + this.gender.name() + " Gender");
+            }
+
+            if (!this.natures.isEmpty()) {
+                this.description.add("§7• Natures: ");
+
+                for (EnumNature nature : this.natures) {
+                    this.description.add("  §7• " + nature.getName());
+                }
+            }
+
+            if (!this.growths.isEmpty()) {
+                this.description.add("§7• Growths: ");
+
+                for (EnumGrowth growth : this.growths) {
+                    this.description.add("  §7• " + growth.name());
+                }
+            }
+
+            if (this.ivRequirement != null) {
+                this.description.add("§7• IV Requirement: " + this.ivRequirement.get() + "%");
+            }
         }
 
         return description;
+    }
+
+    @Override
+    public String toString() {
+        return "PokemonSpec{" +
+                "species=" + species +
+                ", allowEvolutions=" + allowEvolutions +
+                ", gender=" + gender +
+                ", natures=" + natures +
+                ", growths=" + growths +
+                ", ivRequirement=" + ivRequirement +
+                ", description=" + description +
+                '}';
     }
 }
