@@ -6,13 +6,16 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @ConfigSerializable
 public class PixelHuntConfig {
 
+    public static final Path CONFIG_PATH = Paths.get("config" + File.separator + "PixelHunt" + File.separator + "config.yml");
+
     private static final YamlConfigurationLoader CONFIG_LOADER = YamlConfigurationLoader.builder()
-            .path(Paths.get("config" + File.separator + "PixelHunt" + File.separator + "config.yml"))
+            .path(CONFIG_PATH)
             .build();
 
     private static PixelHuntConfig instance;
