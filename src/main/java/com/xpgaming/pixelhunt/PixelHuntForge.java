@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 
 @Mod(
@@ -64,6 +65,12 @@ public class PixelHuntForge {
             try {
                 PixelHuntConfig.CONFIG_PATH.getParent().toFile().mkdir();
                 Files.createFile(PixelHuntConfig.CONFIG_PATH);
+
+                InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("");
+                byte[] buffer = new byte[resourceAsStream.available()];
+                resourceAsStream.read(buffer);
+
+                Files.write(PixelHuntConfig.CONFIG_PATH, buffer);
             } catch (IOException e) {
                 e.printStackTrace();
             }
