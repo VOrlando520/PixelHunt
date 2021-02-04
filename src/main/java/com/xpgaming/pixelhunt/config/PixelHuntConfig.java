@@ -1,9 +1,11 @@
 package com.xpgaming.pixelhunt.config;
 
 import com.google.common.collect.Lists;
+import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.ObjectMapper;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
@@ -25,8 +27,14 @@ public class PixelHuntConfig {
 
     static {
         try {
-            configNode = CONFIG_LOADER.load();
-            instance = configNode.get(PixelHuntConfig.class);
+            CommentedConfigurationNode node = CONFIG_LOADER.load();
+            ObjectMapper<PixelHuntConfig> mapper = ObjectMapper.factory().get(PixelHuntConfig.class);
+            PixelHuntConfig config = mapper.load(node);
+
+            mapper.save(new PixelHuntConfig(), node);
+            CONFIG_LOADER.save(node);
+            configNode = node;
+            instance = config;
         } catch (ConfigurateException e) {
             e.printStackTrace();
         }
