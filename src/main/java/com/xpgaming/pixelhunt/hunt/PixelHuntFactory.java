@@ -2,6 +2,7 @@ package com.xpgaming.pixelhunt.hunt;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.xpgaming.pixelhunt.hunt.impl.SimplePixelHunt;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.Collections;
@@ -13,7 +14,13 @@ public class PixelHuntFactory {
     private static final Map<String, PixelHunt> LOADED_HUNTS = Maps.newHashMap();
 
     public static void init(ConfigurationNode config) {
-        //TODO:
+        LOADED_HUNTS.clear();
+
+        for (Map.Entry<Object, ? extends ConfigurationNode> hunts : config.node("hunts").childrenMap().entrySet()) {
+            PixelHunt hunt = new SimplePixelHunt(hunts.getKey().toString(), hunts.getValue());
+
+            LOADED_HUNTS.put(hunt.getIdentifier(), hunt);
+        }
     }
 
     public static List<PixelHunt> getAllHunts() {
