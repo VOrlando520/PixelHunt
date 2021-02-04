@@ -10,7 +10,6 @@ import com.xpgaming.pixelhunt.utils.math.UtilRandom;
 import com.xpgaming.pixelhunt.utils.pokemon.requirement.impl.MinimumIntegerRequirement;
 import com.xpgaming.pixelhunt.utils.pokemon.requirement.impl.RandomMinimumIntegerRequirement;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -49,10 +48,6 @@ public class PokemonGenerator {
         this.randomIVGeneration = randomIVGeneration;
         this.minIVPercentage = minIVPercentage;
         this.maxIVPercentage = maxIVPercentage;
-    }
-
-    public List<String> getDisplayDescription() {
-        return Collections.emptyList();
     }
 
     public PokemonSpec generate() {
