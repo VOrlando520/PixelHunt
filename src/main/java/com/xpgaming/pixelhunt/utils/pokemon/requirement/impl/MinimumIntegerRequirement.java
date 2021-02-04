@@ -10,6 +10,10 @@ public class MinimumIntegerRequirement implements Requirement<Integer> {
         this.requirement = requirement;
     }
 
+    @Override
+    public Integer get() {
+        return this.requirement;
+    }
 
     @Override
     public boolean fits(Integer data) {
