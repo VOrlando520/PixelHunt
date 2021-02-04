@@ -1,7 +1,7 @@
 package com.xpgaming.pixelhunt.hunt;
 
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
-import com.pixelmonmod.pixelmon.api.pokemon.PokemonSpec;
+import com.xpgaming.pixelhunt.utils.pokemon.PokemonSpec;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
