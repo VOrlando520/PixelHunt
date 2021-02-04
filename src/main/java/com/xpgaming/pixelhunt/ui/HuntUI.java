@@ -6,7 +6,6 @@ import ca.landonjw.gooeylibs.inventory.api.Template;
 import com.xpgaming.pixelhunt.config.PixelHuntConfig;
 import com.xpgaming.pixelhunt.hunt.PixelHunt;
 import com.xpgaming.pixelhunt.hunt.PixelHuntFactory;
-import com.xpgaming.pixelhunt.utils.UtilConcurrency;
 import com.xpgaming.pixelhunt.utils.item.ItemBuilder;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -19,28 +18,26 @@ public class HuntUI {
             .build());
 
     public static void open(EntityPlayerMP player) {
-        UtilConcurrency.runAsync(() -> {
-            Template.Builder template = Template.builder(PixelHuntConfig.getInstance().getGuiHeight())
-                    .fill(BACKGROUND_FILLER);
+        Template.Builder template = Template.builder(PixelHuntConfig.getInstance().getGuiHeight())
+                .fill(BACKGROUND_FILLER);
 
-            int deltaY = 0;
-            int deltaX = 0;
+        int deltaY = 0;
+        int deltaX = 0;
 
-            for (PixelHunt hunt : PixelHuntFactory.getAllHunts()) {
-                template.set(1 + deltaX, 1 + deltaY, Button.of(hunt.getDisplay()));
+        for (PixelHunt hunt : PixelHuntFactory.getAllHunts()) {
+            template.set(1 + deltaX, 1 + deltaY, Button.of(hunt.getDisplay()));
 
-                ++deltaX;
+            ++deltaX;
 
-                if (deltaX == 7) {
-                    deltaX = 1;
-                    ++deltaY;
-                }
+            if (deltaX == 7) {
+                deltaX = 1;
+                ++deltaY;
             }
+        }
 
-            Page.builder()
-                    .title(PixelHuntConfig.getInstance().getGuiName())
-                    .template(template.build())
-                    .build().forceOpenPage(player);
-        });
+        Page.builder()
+                .title(PixelHuntConfig.getInstance().getGuiName())
+                .template(template.build())
+                .build().forceOpenPage(player);
     }
 }
