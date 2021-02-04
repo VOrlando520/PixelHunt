@@ -2,9 +2,9 @@ package com.xpgaming.pixelhunt.hunt.impl;
 
 import com.google.common.collect.Lists;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import com.xpgaming.pixelhunt.hunt.PixelHunt;
 import com.xpgaming.pixelhunt.utils.UtilServer;
-import com.xpgaming.pixelhunt.utils.item.UtilItemStack;
 import com.xpgaming.pixelhunt.utils.math.UtilRandom;
 import com.xpgaming.pixelhunt.utils.pokemon.PokemonGenerator;
 import com.xpgaming.pixelhunt.utils.pokemon.PokemonSpec;
@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.util.Collections;
 import java.util.List;
 
 public class SimplePixelHunt implements PixelHunt {
@@ -38,15 +39,46 @@ public class SimplePixelHunt implements PixelHunt {
 
     @Override
     public void load(ConfigurationNode config) {
-        ConfigurationNode configNode = config.node(this.identifier);
+        this.randomCommands = config.node("random-reward-commands").getBoolean(false);
+        this.rewardCommands.addAll(this.getStringList(config, "reward-commands"));
 
-        this.randomCommands = configNode.node("random-reward-commands").getBoolean(false);
+        PokemonGenerator.Builder builder = PokemonGenerator.builder();
 
+        builder.setSpeciesRequired(config.node("require-species").getBoolean())
+                .setAllowLegends(config.node("allow-legends").getBoolean())
+                .setAllowUltraBeasts(config.node("allow-ultra-beasts").getBoolean())
+                .setAllowEvolutions(config.node("allow-evolutions").getBoolean())
+                .setGenderRequirement(config.node("require-gender").getBoolean())
+                .setPotentialRequiredGrowths(config.node("number-of-possible-genders").getInt())
+                .setNatureRequirement(config.node("require-nature").getBoolean())
+                .setPotentialNatureRequirements(config.node("number-of-possible-natures").getInt())
+                .setIVRequirement(config.node("require-iv-percentage").getBoolean())
+                .setRandomIVGeneration(config.node("random-iv-generation").getBoolean());
+
+        if (config.node("random-iv-generation").getBoolean()) {
+            builder.setMinimumIVPercentage(config.node("minimum-iv-percentage").getInt())
+                    .setMaximumIVPercentage(config.node("maximum-iv-percentage").getInt());
+        } else {
+            builder.setMinimumIVPercentage(config.node("required-iv-percentage").getInt())
+                    .setMaximumIVPercentage(config.node("required-iv-percentage").getInt());
+        }
+
+
+        for (String type : this.getStringList(config, "blocked-types")) {
+            builder.addBlockedType(EnumSpecies.getFromNameAnyCase(type));
+        }
+
+        this.generator = builder.build();
+    }
+
+    private List<String> getStringList(ConfigurationNode node, String... path) {
         try {
-            this.rewardCommands.addAll(configNode.node("reward-commands").getList(String.class));
+            return node.node((Object[]) path).getList(String.class);
         } catch (SerializationException e) {
             e.printStackTrace();
         }
+
+        return Collections.emptyList();
     }
 
     @Override
@@ -58,7 +90,6 @@ public class SimplePixelHunt implements PixelHunt {
     public PokemonSpec generatePokemon() {
         this.currentPokemon = this.generator.generate();
         this.displayItem = this.currentPokemon.getPhoto();
-        UtilItemStack.setLore(this.displayItem, this.generator.getDisplayDescription());
         return this.currentPokemon;
     }
 
