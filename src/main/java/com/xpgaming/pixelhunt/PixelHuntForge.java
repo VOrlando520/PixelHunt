@@ -4,6 +4,7 @@ import com.envyful.acaf.api.CommandFactory;
 import com.envyful.acaf.impl.ForgeCommandFactory;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.xpgaming.pixelhunt.commands.PixelHuntCommand;
+import com.xpgaming.pixelhunt.config.PixelHuntConfig;
 import com.xpgaming.pixelhunt.listener.PokemonCaptureListener;
 import com.xpgaming.pixelhunt.listener.PokemonSpawnListener;
 import com.xpgaming.pixelhunt.task.ParticleDisplayTask;
@@ -33,6 +34,8 @@ public class PixelHuntForge {
     private final ParticleDisplayTask displayTask = new ParticleDisplayTask();
     private final CommandFactory commandFactory = new ForgeCommandFactory();
 
+    private PixelHuntConfig config;
+
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         instance = this;
@@ -41,6 +44,7 @@ public class PixelHuntForge {
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
         server = event.getServer();
+        config = PixelHuntConfig.getInstance();
 
         MinecraftForge.EVENT_BUS.register(this.displayTask);
         MinecraftForge.EVENT_BUS.register(new PokemonSpawnListener(this));
