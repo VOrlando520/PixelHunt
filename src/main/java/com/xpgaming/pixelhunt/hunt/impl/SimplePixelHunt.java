@@ -3,7 +3,9 @@ package com.xpgaming.pixelhunt.hunt.impl;
 import com.google.common.collect.Lists;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.xpgaming.pixelhunt.hunt.PixelHunt;
+import com.xpgaming.pixelhunt.utils.UtilServer;
 import com.xpgaming.pixelhunt.utils.item.UtilItemStack;
+import com.xpgaming.pixelhunt.utils.math.UtilRandom;
 import com.xpgaming.pixelhunt.utils.pokemon.PokemonGenerator;
 import com.xpgaming.pixelhunt.utils.pokemon.PokemonSpec;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -67,6 +69,12 @@ public class SimplePixelHunt implements PixelHunt {
 
     @Override
     public void rewardCatch(EntityPlayerMP player, Pokemon caught) {
-        //TODO:
+        if (this.randomCommands) {
+            UtilServer.executeCommand(UtilRandom.getRandomElement(this.rewardCommands).replace("%player%", player.getName()));
+        } else {
+            for (String rewardCommand : this.rewardCommands) {
+                UtilServer.executeCommand(rewardCommand.replace("%player%", player.getName()));
+            }
+        }
     }
 }
