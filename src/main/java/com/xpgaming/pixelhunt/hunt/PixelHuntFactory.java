@@ -20,6 +20,7 @@ public class PixelHuntFactory {
             PixelHunt hunt = new SimplePixelHunt(hunts.getKey().toString(), hunts.getValue());
 
             LOADED_HUNTS.put(hunt.getIdentifier(), hunt);
+            hunt.generatePokemon();
         }
     }
 
