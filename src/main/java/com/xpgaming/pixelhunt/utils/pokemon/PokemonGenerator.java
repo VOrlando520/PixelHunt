@@ -209,14 +209,16 @@ public class PokemonGenerator {
         public PokemonGenerator build() {
             return new PokemonGenerator(this.blockedTypes,
                     this.speciesRequirement,
-                    allowLegends, allowUltraBeasts, this.genderRequirement,
+                    this.allowLegends,
+                    this.allowUltraBeasts,
+                    this.genderRequirement,
                     this.growthRequirement,
                     this.natureRequirement,
                     this.potentialGrowthRequirements,
                     this.potentialNatureRequirements,
                     this.allowEvolutions,
-                    this.randomIVGeneration,
                     this.ivRequirement,
+                    this.randomIVGeneration,
                     this.minIVPercentage,
                     this.maxIVPercentage);
         }
