@@ -2,6 +2,9 @@ guiHeight: 3
 guiName: "PixelHunt"
 backgroundItem: "minecraft:stained_glass_pane"
 backgroundItemDamage: 8
+checkeredBackground: false
+#offColourBackgroundItem: "minecraft:stained_glass_pane"
+#offColourBackgroundItemDamage: 9
 
 hunts:
   Simple:
