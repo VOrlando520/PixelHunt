@@ -1,42 +1,36 @@
 buildscript {
     repositories {
-        maven {
-            name = 'forge'
-            url = 'http://files.minecraftforge.net/maven'
-        }
-        maven {
-            name = 'sponge'
-            url = 'https://repo.spongepowered.org/maven'
-        }
+        jcenter()
+        maven { url = "https://files.minecraftforge.net/maven" }
     }
-
     dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.4"
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
+plugins {
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id 'org.spongepowered.plugin' version '0.9.0'
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+compileJava.options.encoding = 'UTF-8'
 
-apply plugin: 'java'
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'com.github.johnrengelman.shadow'
-
-version = "1.12.2-forge-1.0.1"
-group = "com.xpgaming.pixelhunt"
+version = "-gui-blue-1.12.2-1.2.6"
+group = "com.xpgaming.pixelhunt" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "pixelhunt"
 
-compileJava.options.encoding = 'UTF-8'
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
 
 minecraft {
-    mappings channel: 'snapshot', version: '20180814-1.12'
+    version = "1.12.2-14.23.5.2838"
+    runDir = "run"
+    mappings = "snapshot_20171003"
 }
 
 repositories {
     jcenter()
-
-    flatDir {
-        dirs '/libs/'
-    }
 }
 
 configurations {
@@ -44,28 +38,35 @@ configurations {
     compile.extendsFrom provided
 }
 
+shadowJar {
+//    configurations = [project.configurations.shadow]
+    dependencies {
+        exclude "GooeyLibs*.jar"
+        exclude "Pixelmon*.jar"
+    }
+}
+
+reobf {
+    shadowJar {}
+}
+
+
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
-
-    implementation fg.deobf('com.pixelmonmod.pixelmon:Pixelmon-1.12.2-8.0.2-server:1.12.2-forge-1.0.1')
-    implementation fg.deobf('ca.landonjw.gooeylibs:GooeyLibs-1.0.6:1.12.2-forge-1.0.1')
-
-    shadow 'org.spongepowered:configurate-yaml:4.0.0'
-    shadow fg.deobf('com.envyful.acaf:acaf-1.0-SNAPSHOT:1.12.2-forge-1.0.1')
+    shadow fileTree(dir: 'libs', include: '*.jar')
+    provided('org.spongepowered:spongeapi:7.2.0')
 }
 
 processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
-    inputs.property "mcversion", '1.12.2'
+    inputs.property "mcversion", project.minecraft.version
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
 
         // replace version and mcversion
-        expand 'version': project.version,
-                'mcversion': '1.12.2'
+        expand 'version':project.version, 'mcversion':project.minecraft.version
     }
 
     // copy everything else except the mcmod.info
@@ -73,31 +74,4 @@ processResources {
         exclude 'mcmod.info'
     }
 }
-
-configurations {
-    provided
-    compile.extendsFrom provided
-    compileJava.options.fork = true
-}
-
-shadowJar {
-    configurations = [project.configurations.shadow]
-    archiveName = rootProject.name + '.jar'
-
-    relocate('org.spongepowered.configurate', "com.xpgaming.pixelhunt.shade.configurate")
-    relocate('org.yaml.snakeyaml', "com.xpgaming.pixelhunt.shade.yaml.snakeyaml")
-    relocate('org.checkerframework.checker', "com.xpgaming.pixelhunt.shade.checkerframework.checker")
-    relocate('org.checkerframework.common', "com.xpgaming.pixelhunt.shade.checkerframework.common")
-    relocate('org.checkerframework.dataflow', "com.xpgaming.pixelhunt.shade.checkerframework.dataflow")
-    relocate('org.checkerframework.framework', "com.xpgaming.pixelhunt.shade.checkerframework.framework")
-    relocate('io.leangen.geantyref', "com.xpgaming.pixelhunt.shade.geantyref")
-    relocate('com.envyful.acaf', "com.xpgaming.pixelhunt.shade.acaf")
-}
-
-reobf {
-    shadowJar {
-        classpath = sourceSets.main.compileClasspath
-    }
-}
-
-jar.finalizedBy('reobfJar')
+tasks.build.dependsOn reobfShadowJar
