@@ -50,7 +50,7 @@ public class PixelHuntForge {
     public void onServerStarting(FMLServerStartingEvent event) {
         server = event.getServer();
         this.checkAndCreateConfig();
-        config = PixelHuntConfig.getInstance();
+        config = PixelHuntConfig.getInstance(PixelHuntConfig.CONFIG_PATH);
         PixelHuntFactory.init(PixelHuntConfig.getConfigNode());
 
         MinecraftForge.EVENT_BUS.register(this.displayTask);
@@ -88,6 +88,10 @@ public class PixelHuntForge {
 
     public static final MinecraftServer getServer() {
         return server;
+    }
+
+    public PixelHuntConfig getConfig() {
+        return this.config;
     }
 
     public ParticleDisplayTask getDisplayTask() {
