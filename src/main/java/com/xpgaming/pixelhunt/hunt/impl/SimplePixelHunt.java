@@ -35,6 +35,8 @@ public class SimplePixelHunt implements PixelHunt {
     private boolean maxIvs;
     private boolean ivMultiplierEnabled;
     private float ivMultiplier;
+    private long duration;
+    private long currentStart;
 
     public SimplePixelHunt(String identifier, ConfigurationNode node) {
         this.identifier = identifier;
@@ -54,6 +56,7 @@ public class SimplePixelHunt implements PixelHunt {
         this.maxIvs = config.node("max-ivs").getBoolean();
         this.ivMultiplierEnabled = config.node("iv-multiplier-enabled").getBoolean();
         this.ivMultiplier = config.node("iv-multiplier").getFloat();
+        this.duration = config.node("max-duration").getLong();
 
         PokemonGenerator.Builder builder = PokemonGenerator.builder();
 
