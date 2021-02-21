@@ -56,6 +56,7 @@ public class PixelHuntConfig {
     private String offColourBackgroundItem = "minecraft:stained_glass_pane";
     private int offColourBackgroundItemDamage = 9;
     private List<String> spawnBroadcast = Lists.newArrayList();
+    private List<String> timeoutBroadcast = Lists.newArrayList();
 
     public int getGuiHeight() {
         return this.guiHeight;
@@ -87,5 +88,9 @@ public class PixelHuntConfig {
 
     public int getOffColourBackgroundItemDamage() {
         return this.offColourBackgroundItemDamage;
+    }
+
+    public List<String> getTimeoutBroadcast() {
+        return this.timeoutBroadcast;
     }
 }
