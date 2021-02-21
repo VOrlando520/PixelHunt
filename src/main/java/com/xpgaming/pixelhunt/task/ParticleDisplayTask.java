@@ -54,6 +54,13 @@ public class ParticleDisplayTask {
                         5,
                         0, 0, 0, 0.05);
             }
+
+            for (PixelHunt allHunt : PixelHuntFactory.getAllHunts()) {
+                if (allHunt.hasTimedOut()) {
+                    allHunt.end();
+                    allHunt.generatePokemon();
+                }
+            }
         });
     }
 
