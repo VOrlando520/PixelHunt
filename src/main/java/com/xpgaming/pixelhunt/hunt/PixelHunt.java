@@ -62,4 +62,19 @@ public interface PixelHunt {
      */
     void rewardCatch(EntityPlayerMP player, Pokemon caught);
 
+    /**
+     *
+     * Force end the hunt
+     *
+     */
+    void end();
+
+    /**
+     *
+     * Check if the hunt has timed out (i.e. no one caught the specified pokemon in time)
+     *
+     * @return true if timed out - false if not
+     */
+    boolean hasTimedOut();
+
 }
