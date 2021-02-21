@@ -159,4 +159,18 @@ public class SimplePixelHunt implements PixelHunt {
             }
         }
     }
+
+    @Override
+    public void end() {
+        for (String s : PixelHuntConfig.getInstance().getTimeoutBroadcast()) {
+
+        }
+    }
+
+    @Override
+    public boolean hasTimedOut() {
+        long timePassed = System.currentTimeMillis() - this.currentStart;
+
+        return timePassed >= this.duration;
+    }
 }
