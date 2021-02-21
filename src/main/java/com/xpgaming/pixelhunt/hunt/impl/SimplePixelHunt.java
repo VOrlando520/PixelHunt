@@ -21,6 +21,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SimplePixelHunt implements PixelHunt {
 
@@ -55,7 +56,7 @@ public class SimplePixelHunt implements PixelHunt {
         this.maxIvs = config.node("max-ivs").getBoolean();
         this.ivMultiplierEnabled = config.node("iv-multiplier-enabled").getBoolean();
         this.ivMultiplier = config.node("iv-multiplier").getFloat();
-        this.duration = config.node("max-duration").getLong();
+        this.duration = TimeUnit.MINUTES.toMillis(config.node("max-duration-minutes").getLong());
 
         PokemonGenerator.Builder builder = PokemonGenerator.builder();
 
