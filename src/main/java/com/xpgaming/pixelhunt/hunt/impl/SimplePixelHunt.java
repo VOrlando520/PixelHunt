@@ -112,6 +112,7 @@ public class SimplePixelHunt implements PixelHunt {
 
         Pixelmon.EVENT_BUS.post(event);
 
+        this.currentStart = System.currentTimeMillis();
         this.currentPokemon = event.getGeneratedPokemon();
 
         for (String broadcast : PixelHuntConfig.getInstance().getSpawnBroadcast()) {
@@ -162,8 +163,9 @@ public class SimplePixelHunt implements PixelHunt {
 
     @Override
     public void end() {
-        for (String s : PixelHuntConfig.getInstance().getTimeoutBroadcast()) {
-
+        for (String message : PixelHuntConfig.getInstance().getTimeoutBroadcast()) {
+            PixelHuntForge.getServer().getPlayerList()
+                    .sendMessage(new TextComponentString(message.replace("%pokemon%", this.currentPokemon.getName())));
         }
     }
 
