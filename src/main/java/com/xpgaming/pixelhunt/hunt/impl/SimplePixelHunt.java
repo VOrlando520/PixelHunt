@@ -8,7 +8,6 @@ import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import com.xpgaming.pixelhunt.PixelHuntForge;
 import com.xpgaming.pixelhunt.api.event.PixelHuntStartEvent;
 import com.xpgaming.pixelhunt.api.event.PixelHuntWonEvent;
-import com.xpgaming.pixelhunt.config.PixelHuntConfig;
 import com.xpgaming.pixelhunt.hunt.PixelHunt;
 import com.xpgaming.pixelhunt.utils.UtilServer;
 import com.xpgaming.pixelhunt.utils.math.UtilRandom;
@@ -115,7 +114,7 @@ public class SimplePixelHunt implements PixelHunt {
         this.currentStart = System.currentTimeMillis();
         this.currentPokemon = event.getGeneratedPokemon();
 
-        for (String broadcast : PixelHuntConfig.getInstance().getSpawnBroadcast()) {
+        for (String broadcast : PixelHuntForge.getInstance().getConfig().getSpawnBroadcast()) {
             PixelHuntForge.getServer().getPlayerList()
                     .sendMessage(new TextComponentString(broadcast.replace("%pokemon%", this.currentPokemon.getName())));
         }
@@ -163,7 +162,7 @@ public class SimplePixelHunt implements PixelHunt {
 
     @Override
     public void end() {
-        for (String message : PixelHuntConfig.getInstance().getTimeoutBroadcast()) {
+        for (String message : PixelHuntForge.getInstance().getConfig().getTimeoutBroadcast()) {
             PixelHuntForge.getServer().getPlayerList()
                     .sendMessage(new TextComponentString(message.replace("%pokemon%", this.currentPokemon.getName())));
         }
