@@ -5,8 +5,12 @@ import com.envyful.acaf.api.command.Command;
 import com.envyful.acaf.api.command.Permissible;
 import com.envyful.acaf.api.command.executor.CommandProcessor;
 import com.envyful.acaf.api.command.executor.Sender;
+import com.xpgaming.pixelhunt.PixelHuntForge;
+import com.xpgaming.pixelhunt.config.PixelHuntConfig;
 import com.xpgaming.pixelhunt.ui.HuntUI;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 @Command(
        value = "hunt",
@@ -19,6 +23,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 )
 public class PixelHuntCommand {
 
+    private static final ITextComponent STARTED_RELOAD = new TextComponentString("Reloading...");
+    private static final ITextComponent RELOADED = new TextComponentString("Reloaded");
+
     @CommandProcessor
     public void executeCommand(@Sender EntityPlayerMP sender) {
         HuntUI.open(sender);
@@ -27,7 +34,9 @@ public class PixelHuntCommand {
     @CommandProcessor("reload")
     @Permissible("pixelhunt.admin.reload")
     public void executeReloadCommand(@Sender EntityPlayerMP sender) {
-        //TODO: reload configs
+        sender.sendMessage(STARTED_RELOAD);
+        PixelHuntForge.getInstance().setConfig(PixelHuntConfig.getInstance(PixelHuntConfig.CONFIG_PATH));
+        sender.sendMessage(RELOADED);
     }
 }
 
