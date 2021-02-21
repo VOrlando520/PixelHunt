@@ -1,14 +1,13 @@
 package com.xpgaming.pixelhunt.config;
 
 import com.google.common.collect.Lists;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -18,30 +17,20 @@ public class PixelHuntConfig {
 
     public static final Path CONFIG_PATH = Paths.get("config" + File.separator + "PixelHunt" + File.separator + "config.yml");
 
-    private static final YamlConfigurationLoader CONFIG_LOADER = YamlConfigurationLoader.builder()
-            .path(CONFIG_PATH)
-            .build();
-
-    private static PixelHuntConfig instance;
     private static ConfigurationNode configNode;
 
-    static {
+    public static PixelHuntConfig getInstance(Path path) {
         try {
-            CommentedConfigurationNode node = CONFIG_LOADER.load();
-            ObjectMapper<PixelHuntConfig> mapper = ObjectMapper.factory().get(PixelHuntConfig.class);
-            PixelHuntConfig config = mapper.load(node);
+            ObjectMapper<PixelHuntConfig> objectMapper = ObjectMapper.factory().get(PixelHuntConfig.class);
+            YamlConfigurationLoader build = YamlConfigurationLoader.builder().path(path).build();
 
-            mapper.save(new PixelHuntConfig(), node);
-            CONFIG_LOADER.save(node);
-            configNode = node;
-            instance = config;
-        } catch (ConfigurateException e) {
+            configNode = build.load();
+            return objectMapper.load(configNode);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public static PixelHuntConfig getInstance() {
-        return instance;
+        return null;
     }
 
     public static ConfigurationNode getConfigNode() {
