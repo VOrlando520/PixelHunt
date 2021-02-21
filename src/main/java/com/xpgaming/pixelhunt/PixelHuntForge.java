@@ -94,6 +94,10 @@ public class PixelHuntForge {
         return this.config;
     }
 
+    public void setConfig(PixelHuntConfig config) {
+        this.config = config;
+    }
+
     public ParticleDisplayTask getDisplayTask() {
         return this.displayTask;
     }
