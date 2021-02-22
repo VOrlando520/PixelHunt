@@ -9,6 +9,7 @@ import com.envyful.acaf.api.command.executor.Sender;
 import com.xpgaming.pixelhunt.PixelHuntForge;
 import com.xpgaming.pixelhunt.config.PixelHuntConfig;
 import com.xpgaming.pixelhunt.hunt.PixelHunt;
+import com.xpgaming.pixelhunt.hunt.PixelHuntFactory;
 import com.xpgaming.pixelhunt.ui.HuntUI;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.ITextComponent;
@@ -39,6 +40,7 @@ public class PixelHuntCommand {
     public void executeReloadCommand(@Sender EntityPlayerMP sender) {
         sender.sendMessage(STARTED_RELOAD);
         PixelHuntForge.getInstance().setConfig(PixelHuntConfig.getInstance(PixelHuntConfig.CONFIG_PATH));
+        PixelHuntFactory.reloadAll();
         sender.sendMessage(RELOADED);
     }
 
