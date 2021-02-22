@@ -19,6 +19,8 @@ hunts:
     iv-multiplier-enabled: false
     iv-multiplier: 1.5
     max-duration-minutes: 30
+    timeoutBroadcast:
+      - 'Hunt for %pokemon% timed out!
 gui-height: 3
 gui-name: PixelHunt
 background-item: minecraft:stained_glass_pane
