@@ -55,5 +55,14 @@ public class PixelHuntCommand {
 
         target.generatePokemon();
     }
+
+    @CommandProcessor("list")
+    @Permissible("pixelhunt.admin.list")
+    public void executeListCommand(@Sender EntityPlayerMP sender) {
+        sender.sendMessage(new TextComponentString("Hunts: "));
+        for (PixelHunt hunt : PixelHuntFactory.getAllHunts()) {
+            sender.sendMessage(new TextComponentString("  " + hunt.getIdentifier()));
+        }
+    }
 }
 
