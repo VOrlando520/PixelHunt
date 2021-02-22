@@ -2,6 +2,7 @@ package com.xpgaming.pixelhunt.hunt;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.xpgaming.pixelhunt.config.PixelHuntConfig;
 import com.xpgaming.pixelhunt.hunt.impl.SimplePixelHunt;
 import org.spongepowered.configurate.ConfigurationNode;
 
@@ -22,6 +23,12 @@ public class PixelHuntFactory {
             LOADED_HUNTS.put(hunt.getIdentifier().toLowerCase(), hunt);
             hunt.generatePokemon();
         }
+    }
+
+    public static void reloadAll() {
+        getAllHunts().forEach(PixelHunt::end);
+        LOADED_HUNTS.clear();
+        init(PixelHuntConfig.getConfigNode());
     }
 
     public static List<PixelHunt> getAllHunts() {
