@@ -19,7 +19,7 @@ public class PixelHuntFactory {
         for (Map.Entry<Object, ? extends ConfigurationNode> hunts : config.node("hunts").childrenMap().entrySet()) {
             PixelHunt hunt = new SimplePixelHunt(hunts.getKey().toString(), hunts.getValue());
 
-            LOADED_HUNTS.put(hunt.getIdentifier(), hunt);
+            LOADED_HUNTS.put(hunt.getIdentifier().toLowerCase(), hunt);
             hunt.generatePokemon();
         }
     }
@@ -29,6 +29,6 @@ public class PixelHuntFactory {
     }
 
     public static PixelHunt getHunt(String identifier) {
-        return LOADED_HUNTS.get(identifier);
+        return LOADED_HUNTS.get(identifier.toLowerCase());
     }
 }
