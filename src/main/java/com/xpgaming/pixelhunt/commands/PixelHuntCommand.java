@@ -27,7 +27,7 @@ public class PixelHuntCommand {
 
     private static final ITextComponent STARTED_RELOAD = new TextComponentString("Reloading...");
     private static final ITextComponent RELOADED = new TextComponentString("Reloaded");
-    private static final ITextComponent DOES_NOT_EXIST = new TextComponentString("Reloaded");
+    private static final ITextComponent STARTED = new TextComponentString("Attempting to start hunt");
 
     @CommandProcessor
     public void executeCommand(@Sender EntityPlayerMP sender) {
@@ -45,6 +45,8 @@ public class PixelHuntCommand {
     @CommandProcessor("start")
     @Permissible("pixelhunt.admin.start")
     public void executeStartCommand(@Sender EntityPlayerMP sender, @Argument PixelHunt target) {
+        sender.sendMessage(STARTED);
+
         if (!target.hasTimedOut()) {
             target.end();
         }
